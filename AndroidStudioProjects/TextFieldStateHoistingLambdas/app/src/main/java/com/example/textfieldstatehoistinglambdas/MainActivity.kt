@@ -65,7 +65,7 @@ fun Aula03app(modifier: Modifier = Modifier) {
 fun TextFildExemplo(
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Mo
+    modifier: Modifier
 ) {
     TextField(value = value, onValueChange = onValueChange, label = { Text("Value") })
 }

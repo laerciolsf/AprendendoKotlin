@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -25,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,9 +52,24 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MinhaTela() {
-    JogoQuiz()
-}
+    Column (
+        modifier = Modifier.fillMaxSize(), // Ocupa toda a tela
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally)
+    {
+        var questionarioIniciado by remember { mutableStateOf(false) }
 
+        if (!questionarioIniciado) {
+            Button(
+                onClick = { questionarioIniciado = true }
+            ) {
+                Text(text = "Iniciar Questionário")
+            }
+        } else {
+            JogoQuiz()
+        }
+    }
+}
 
 @Composable
 fun JogoQuiz() {
@@ -97,7 +114,7 @@ fun JogoQuiz() {
     )
     val respostasCorretasEsperadas = listOf(
         listOf("A"), // Resposta correta 1
-        listOf("A"),  // Resposta correta 2
+        listOf("A"), // Resposta correta 2
         listOf("C"), // Resposta correta 3
         listOf("E")  // Resposta correta 4
     )
@@ -155,6 +172,7 @@ fun JogoQuiz() {
         // Exibe o resultado apenas quando todas as perguntas forem respondidas
         if (resultado.isNotEmpty()) {
             Text(text = resultado, modifier = Modifier.padding(16.dp))
+
         }
     }
 }

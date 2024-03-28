@@ -146,9 +146,17 @@ fun JogoQuiz() {
                     modifier = Modifier.padding(16.dp)
                 )
 
+                // Calcular média e atribuir nota de 1 a 10
+                val media = respostasCorretas.toDouble() / perguntas.size.toDouble()
+                val nota = (media * 10).toInt()
 
+                Spacer(modifier = Modifier.height(16.dp))
 
-
+                // Exibir a média e a nota
+                Text(
+                    text = "Média de acertos: ${media * 100}%\nNota: $nota/10",
+                    modifier = Modifier.padding(16.dp)
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -160,10 +168,6 @@ fun JogoQuiz() {
                 ) {
                     Text(text = "Voltar ao Início")
                 }
-
-
-
-
             } else {
                 // Caso contrário, mostrar a pergunta e as opções de resposta
                 Text(
@@ -212,8 +216,6 @@ fun JogoQuiz() {
                     }
                 }
             }
-
-//
         }
     }
 }

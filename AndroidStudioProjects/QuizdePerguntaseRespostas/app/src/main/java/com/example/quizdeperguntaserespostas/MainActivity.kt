@@ -70,12 +70,12 @@ fun MinhaTela() {
         horizontalAlignment = Alignment.CenterHorizontally
     )
     {
-        JogoQuiz()
+        JogoQuiz1()
     }
 }
 
 @Composable
-fun JogoQuiz() {
+fun JogoQuiz1() {
     // Variáveis para controlar o estado do jogo
     var indicePerguntaAtual by remember { mutableStateOf(0) } // Índice da pergunta atual
     var respostaSelecionada by remember { mutableStateOf<String?>(null) } // Opção selecionada pelo usuário
@@ -84,44 +84,85 @@ fun JogoQuiz() {
     var exibirTelaInicial by remember { mutableStateOf(true) } // Flag para exibir a tela inicial
     var opcaoSelecionada by remember { mutableStateOf(false) } // Flag para indicar se uma opção foi selecionada
 
+
     // Lista de perguntas e suas respectivas opções de resposta
     val perguntas = listOf(
-        "Qual é a capital do Brasil?" to listOf(
-            "A) Brasília    ",
-            "B) Rio de Janeiro    ",
-            "C) São Paulo    ",
-            "D) Belo Horizonte    ",
-            "E) Porto Alegre    "
+        "1) Qual é o jogo que popularizou o gênero battle royale?" to listOf(
+            "A) Call of Duty: Modern Warfare    ",
+            "B) Fortnite    ",
+            "C) Apex Legends    ",
+            "D) Lowzinho    ",
+            "E) Minecraft    "
         ),
-        "Qual é a capital da França?" to listOf(
-            "A) Paris    ",
-            "B) Londres    ",
-            "C) Roma    ",
-            "D) Berlim    ",
-            "E) Madri    "
+        "2) Qual é o nome do encanador italiano da Nintendo?" to listOf(
+            "A) Luigi    ",
+            "B) Mario    ",
+            "C) Wario    ",
+            "D) Yoshi    ",
+            "E) Donkey Kong    "
         ),
-        "Qual é a capital de São Paulo?" to listOf(
-            "A) Brasília    ",
-            "B) Rio de Janeiro    ",
-            "C) São Paulo    ",
-            "D) Belo Horizonte    ",
-            "E) Porto Alegre    "
+        "3) Qual é o jogo mais vendido de todos os tempos?" to listOf(
+            "A) Tetris    ",
+            "B) Grand Theft Auto V    ",
+            "C) Minecraft    ",
+            "D) Wii Sports    ",
+            "E) Super Mario Bros.    "
         ),
-        "Qual é a capital da Espanha?" to listOf(
-            "A) Paris    ",
-            "B) Londres    ",
-            "C) Roma    ",
-            "D) Berlim    ",
-            "E) Madri    "
+        "4) Qual é o nome da protagonista feminina do jogo 'The Last of Us'?" to listOf(
+            "A) Ellie    ",
+            "B) Lara Croft    ",
+            "C) Samus Aran    ",
+            "D) Jill Valentine    ",
+            "E) Chloe Frazer    "
+        ),
+        "5) Em qual jogo você controla um grupo de caçadores de monstros profissionais?" to listOf(
+            "A) Monster Hunter: World    ",
+            "B) The Witcher 3: Wild Hunt    ",
+            "C) Dark Souls    ",
+            "D) Bloodborne    ",
+            "E) Skyrim    "
+        ),
+        "6) Qual é o nome do protagonista de 'The Legend of Zelda'?" to listOf(
+            "A) Link    ",
+            "B) Zelda    ",
+            "C) Ganondorf    ",
+            "D) Epona    ",
+            "E) Sheik    "
+        ),
+        "7) Qual é o nome do jogo que popularizou o gênero 'MOBA'?" to listOf(
+            "A) League of Legends    ",
+            "B) Dota 2    ",
+            "C) Heroes of the Storm    ",
+            "D) Smite    ",
+            "E) Vainglory    "
+        ),
+        "8) Em qual jogo você controla um assassino contratado chamado 'Agent 47'?" to listOf(
+            "A) Assassin's Creed    ",
+            "B) Hitman    ",
+            "C) Splinter Cell    ",
+            "D) Metal Gear Solid    ",
+            "E) Dishonored    "
+        ),
+        "9) Qual é o nome do jogo onde você pilota uma nave espacial e explora uma galáxia infinita?" to listOf(
+            "A) Elite Dangerous    ",
+            "B) Star Wars: Squadrons    ",
+            "C) No Man's Sky    ",
+            "D) EVE Online    ",
+            "E) Star Citizen     "
         )
     )
 
-    // Lista das respostas corretas para cada pergunta
+// Lista das respostas corretas para cada pergunta
     val respostasCorretasEsperadas = listOf(
-        listOf("A"), // Resposta correta para a primeira pergunta
-        listOf("A"), // Resposta correta para a segunda pergunta
-        listOf("C"), // Resposta correta para a terceira pergunta
-        listOf("E")  // Resposta correta para a quarta pergunta
+        listOf("B"), // Resposta correta para a primeira pergunta
+        listOf("B"), // Resposta correta para a segunda pergunta
+        listOf("A"), // Resposta correta para a terceira pergunta
+        listOf("A"), // Resposta correta para a quarta pergunta
+        listOf("A"), // Resposta correta para a quinta pergunta
+        listOf("A"), // Resposta correta para a sexta pergunta
+        listOf("A"), // Resposta correta para a sétima pergunta
+        listOf("B"), // Resposta correta para a oitava pergunta
+        listOf("C"), // Resposta correta para a nona pergunta
     )
 
     // Layout principal do jogo
@@ -145,7 +186,7 @@ fun JogoQuiz() {
                 }
             ) {
                 Text(
-                    text = "Iniciar Jogo",
+                    text = "Iniciar o Quiz dos Games", //Nome do Questionario
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp
@@ -304,7 +345,6 @@ fun JogoQuiz() {
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {

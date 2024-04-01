@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,9 +15,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,32 +81,32 @@ fun JogoQuiz() {
 
     val perguntas = listOf(
         "Qual é a capital do Brasil?" to listOf(
-            "A) Brasília",
-            "B) Rio de Janeiro",
-            "C) São Paulo",
-            "D) Belo Horizonte",
-            "E) Porto Alegre"
+            "A) Brasília     ",
+            "B) Rio de Janeiro    ",
+            "C) São Paulo    ",
+            "D) Belo Horizonte    ",
+            "E) Porto Alegre    "
         ),
         "Qual é a capital da França?" to listOf(
-            "A) Paris",
-            "B) Londres",
-            "C) Roma",
-            "D) Berlim",
-            "E) Madri"
+            "A) Paris    ",
+            "B) Londres    ",
+            "C) Roma    ",
+            "D) Berlim    ",
+            "E) Madri    "
         ),
         "Qual é a capital de São Paulo?" to listOf(
-            "A) Brasília",
-            "B) Rio de Janeiro",
-            "C) São Paulo",
-            "D) Belo Horizonte",
-            "E) Porto Alegre"
+            "A) Brasília    ",
+            "B) Rio de Janeiro    ",
+            "C) São Paulo    ",
+            "D) Belo Horizonte    ",
+            "E) Porto Alegre    "
         ),
         "Qual é a capital da Espanha?" to listOf(
-            "A) Paris",
-            "B) Londres",
-            "C) Roma",
-            "D) Berlim",
-            "E) Madri"
+            "A) Paris    ",
+            "B) Londres    ",
+            "C) Roma    ",
+            "D) Berlim    ",
+            "E) Madri    "
         )
     )
 
@@ -159,30 +167,58 @@ fun JogoQuiz() {
                 }
             } else {
                 // Caso contrário, mostrar a pergunta e as opções de resposta
-                Text(
-                    text = perguntas[indicePerguntaAtual].first,
+                Column(
                     modifier = Modifier.padding(16.dp)
-                )
+                ) {
+                    Text(
+                        text = perguntas[indicePerguntaAtual].first,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
 
-                perguntas[indicePerguntaAtual].second.forEach { opcao ->
-                    Row(
-                        modifier = Modifier.padding(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(
-                            selected = (respostaSelecionada == opcao.substring(0, 1)),
-                            onClick = {
-                                respostaSelecionada = opcao.substring(0, 1)
-                                opcaoSelecionada = true
-                            },
-                            enabled = !opcaoSelecionada // Desabilita o RadioButton se uma opção já foi selecionada
-                        )
-                        Text(text = opcao, modifier = Modifier.padding(start = 8.dp))
+                    perguntas[indicePerguntaAtual].second.forEach { opcao ->
+                        val corDeFundo = when {
+                            respostaSelecionada != null -> {
+                                if (opcao.substring(0, 1) == respostaSelecionada) {
+                                    if (respostaSelecionada in respostasCorretasEsperadas[indicePerguntaAtual]) {
+                                        Color.Green
+                                    } else {
+                                        Color.Red
+                                    }
+                                } else if (opcao.substring(0, 1) in respostasCorretasEsperadas[indicePerguntaAtual]) {
+                                    Color.Green
+                                } else {
+                                    Color.Transparent
+                                }
+                            }
+                            else -> Color.Transparent
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .background(corDeFundo, shape = RoundedCornerShape(16.dp))
+                                .padding(vertical = 4.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = (respostaSelecionada == opcao.substring(0, 1)),
+                                    onClick = {
+                                        if (!opcaoSelecionada) {
+                                            respostaSelecionada = opcao.substring(0, 1)
+                                            opcaoSelecionada = true
+                                        }
+                                    }
+                                )
+                                Text(
+                                    text = opcao,
+                                    modifier = Modifier.padding(start = 8.dp)
+                                )
+                            }
+                        }
                     }
                 }
-
                 Spacer(modifier = Modifier.height(16.dp))
-
                 Button(
                     onClick = {
                         if (opcaoSelecionada || respostaSelecionada != null) { // Verifica se uma opção foi selecionada
@@ -214,7 +250,6 @@ fun JogoQuiz() {
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

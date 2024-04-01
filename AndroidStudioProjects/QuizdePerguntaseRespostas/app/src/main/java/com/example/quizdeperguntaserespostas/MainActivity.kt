@@ -58,18 +58,6 @@ fun MinhaTela() {
         horizontalAlignment = Alignment.CenterHorizontally
     )
     {
-        /*var questionarioIniciado by remember { mutableStateOf(false) }
-
-        if (!questionarioIniciado) {
-            Button(
-                onClick = { questionarioIniciado = true }
-            ) {
-                Text(text = "Iniciar Questionário")
-            }
-        } else {
-            JogoQuiz()
-        }
-         */
         JogoQuiz()
     }
 }
@@ -81,6 +69,7 @@ fun JogoQuiz() {
     var respostasCorretas by remember { mutableStateOf(0) }
     var resultado: String by remember { mutableStateOf("") }
     var exibirTelaInicial by remember { mutableStateOf(true) }
+    var opcaoSelecionada by remember { mutableStateOf(false) }
 
     val perguntas = listOf(
         "Qual é a capital do Brasil?" to listOf(
@@ -182,7 +171,11 @@ fun JogoQuiz() {
                     ) {
                         RadioButton(
                             selected = (respostaSelecionada == opcao.substring(0, 1)),
-                            onClick = { respostaSelecionada = opcao.substring(0, 1) }
+                            onClick = {
+                                respostaSelecionada = opcao.substring(0, 1)
+                                opcaoSelecionada = true
+                            },
+                            enabled = !opcaoSelecionada // Desabilita o RadioButton se uma opção já foi selecionada
                         )
                         Text(text = opcao, modifier = Modifier.padding(start = 8.dp))
                     }
@@ -192,22 +185,24 @@ fun JogoQuiz() {
 
                 Button(
                     onClick = {
-                        // Verifica se a resposta selecionada está correta
-                        if (respostaSelecionada in respostasCorretasEsperadas[indicePerguntaAtual]) {
-                            respostasCorretas++
-                        }
+                        if (opcaoSelecionada || respostaSelecionada != null) { // Verifica se uma opção foi selecionada
+                            // Verifica se a resposta selecionada está correta
+                            if (respostaSelecionada in respostasCorretasEsperadas[indicePerguntaAtual]) {
+                                respostasCorretas++
+                            }
 
-                        // Passa para a próxima pergunta ou exibe o resultado final
-                        if (indicePerguntaAtual < perguntas.size - 1) {
-                            indicePerguntaAtual++
-                            respostaSelecionada =
-                                null // Limpa a resposta selecionada para a próxima pergunta
-                        } else {
-                            // Exibe o resultado final
-                            resultado =
-                                "Você acertou $respostasCorretas de ${perguntas.size} perguntas!"
+                            // Passa para a próxima pergunta ou exibe o resultado final
+                            if (indicePerguntaAtual < perguntas.size - 1) {
+                                indicePerguntaAtual++
+                                respostaSelecionada = null // Limpa a resposta selecionada para a próxima pergunta
+                                opcaoSelecionada = false // Reseta a variável de controle de opção selecionada
+                            } else {
+                                // Exibe o resultado final
+                                resultado = "Você acertou $respostasCorretas de ${perguntas.size} perguntas!"
+                            }
                         }
-                    }
+                    },
+                    enabled = opcaoSelecionada || respostaSelecionada != null // Habilita o botão apenas se uma opção foi selecionada
                 ) {
                     if (indicePerguntaAtual < perguntas.size - 1) {
                         Text(text = "Próxima Pergunta")

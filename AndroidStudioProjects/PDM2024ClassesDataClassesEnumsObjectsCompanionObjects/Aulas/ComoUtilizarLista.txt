@@ -1,0 +1,17 @@
+fun main() {
+	val ucs: List<UnidadeCurricular> = listOf(
+    	UnidadeCurricular("PDM", 5),
+        UnidadeCurricular("SD", 6)
+    )
+    
+    
+    for(uc in ucs){
+        println(uc.toString())
+    }
+}
+
+data class UnidadeCurricular(
+	var nome: String,
+	var semestre: Int
+)
+

@@ -1,0 +1,19 @@
+fun main() {
+	val ucs: MutableList<UnidadeCurricular> = mutableListOf(
+    	UnidadeCurricular("PDM", 5),
+        UnidadeCurricular("SD", 6)
+    )
+    ucs.add(
+    	UnidadeCurricular("IP", 1)
+    )
+    
+    for(uc in ucs){
+        println(uc.toString())
+    }
+}
+
+data class UnidadeCurricular(
+	var nome: String,
+	var semestre: Int
+)
+
